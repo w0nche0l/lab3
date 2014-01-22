@@ -11,8 +11,36 @@ $(document).ready(function() {
 function initializePage() {
 	$("#testjs").click(function(e) {
 		$('.jumbotron h1').text("Javascript is connected");
+		$('#testjs').text("blahhhh");
+		$(".jumbotron p").toggleClass("active");
+	});
+
+	$("#submitBtn").click(function(e) {
+		var selected = $("#project").val();
+		$(selected).animate({
+			width:$("#width").val()
+		}, 1000);
+		$(selected + " .project-description").text($("#description").val());
 	});
 
 	// Add any additional listeners here
 	// example: $("#div-id").click(functionToCall);
+	$("a.thumbnail").click(projectClick);
+}
+
+function projectClick(e){
+// Cancel the default action, which prevents the page from reloading
+    e.preventDefault();
+
+    // In an event listener, $(this) is the leement that fired the event
+    var projectTitle = $(this).find("p").text();
+    var jumbotronHeader = $(".jumbotron h1");
+    jumbotronHeader.text(projectTitle);
+    var containingProject = $(this).closest(".project");
+    var description = $(containingProject).find(".project-description");
+    if(description.length ==0){
+    	$(containingProject).append("<div class = 'project-description'><p>Description of the project</p></div>");
+    } else{
+    	description.fadeOut();
+    }
 }
